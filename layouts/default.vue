@@ -11,40 +11,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { HeaderBar } from '@/components/Top.vue'
-
+import { headers } from '@/mocks/top'
 const active_index = ref(0)
-
-const headers: HeaderBar[] = [
-  {
-    title: '首页',
-    link: '/'
-  },
-  {
-    title: '沸点',
-    link: '/demo1'
-  },
-  {
-    title: '课程',
-    link: '/demo1'
-  },
-  {
-    title: '直播',
-    link: '/demo1'
-  },
-  {
-    title: '活动',
-    link: '/demo1'
-  },
-  {
-    title: '竞赛',
-    link: '/demo1'
-  },
-  {
-    title: '商城',
-    link: '/demo1'
-  }
-]
 
 // 导航栏收缩
 onMounted(() => {

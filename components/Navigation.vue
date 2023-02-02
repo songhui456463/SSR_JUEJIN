@@ -4,8 +4,11 @@
       <NuxtLink
         v-for="(tag, tagindex) in tags"
         :key="tagindex"
-        :href="tag.link"
+        :to="`/articlelist/${tag.link}`"
         class="nav-item"
+        :class="{
+          'activate-navitem': activeNav === tagindex
+        }"
         @mouseenter.stop="($event) => showCategoryPopover($event, tagindex)"
         @mouseleave.stop="($event) => hideCategoryPopover($event, tagindex)"
       >
@@ -14,7 +17,8 @@
             <NuxtLink
               v-for="(tagitem, tagitemindex) in tag.tagitems"
               :key="tagitemindex"
-              :to="`${tag.link}/${tagitem.title}`"
+              @click="($event) => hideCategoryPopover($event, tagindex)"
+              :to="`/articlelist/${tag.link}/${tagitem.title}`"
               >{{ tagitem.title }}</NuxtLink
             >
           </div>
@@ -26,84 +30,29 @@
   </nav>
 </template>
 <script setup lang="ts">
-export interface TagItem {
-  title: string
-}
-export interface Tag {
-  tagitems: TagItem[]
-  link: string
-}
-
-const tags: Tag[] = [
-  {
-    tagitems: [
-      {
-        title: '后端'
-      },
-      {
-        title: '掘金日新计划'
-      },
-      {
-        title: 'Java'
-      },
-      {
-        title: 'Go'
-      },
-      {
-        title: '掘金金石计划'
-      },
-      {
-        title: '架构'
-      }
-    ],
-    link: '/articlelist/backend'
+import { PropType } from 'vue'
+import { Tag } from '@/types/nav'
+const props = defineProps({
+  tags: {
+    type: Array as PropType<Tag[]>,
+    required: true
   },
-  {
-    tagitems: [
-      {
-        title: '前端'
-      },
-      {
-        title: 'Java'
-      },
-      {
-        title: '掘金日新计划'
-      },
-
-      {
-        title: 'Go'
-      },
-      {
-        title: '掘金金石计划'
-      },
-      {
-        title: '架构'
-      }
-    ],
-    link: '/articlelist/front'
+  activeNav: {
+    type: Number,
+    required: true
   }
-]
+})
 
 // 每个大标签的弹出框对应一个响应式数据去显示和隐藏
-const showPopoverEle = ref(new Array(tags.length).fill(false))
+const showPopoverEle = ref(new Array(props.tags.length).fill(false))
 
 /**
  * 显示弹框
  * @param e
- * @param tagindex 当前激活tag的索引
+ * @param tagindex 激活tag的索引
  */
 const showCategoryPopover = (e: MouseEvent, tagindex: number) => {
   showPopoverEle.value[tagindex] = true
-  // // 获取操作元素
-  // const target: HTMLElement | null = e.target as HTMLElement
-  // if (!target) return
-
-  // const categoryPopover: HTMLElement = target.querySelector(
-  //   '.category-popover'
-  // ) as HTMLElement
-  // console.log(categoryPopover)
-
-  // categoryPopover.style.display = 'block'
 }
 
 // 隐藏弹框
@@ -112,9 +61,13 @@ const hideCategoryPopover = (e: MouseEvent, tagindex: number) => {
 }
 </script>
 <style lang="scss" scoped>
+.activate-navitem {
+  color: #007fff !important;
+}
+
 .category-popover {
   position: absolute;
-  left: 0;
+  left: -12px;
   width: 250px;
   top: 46px;
   background-color: #fff;
@@ -158,6 +111,7 @@ const hideCategoryPopover = (e: MouseEvent, tagindex: number) => {
     line-height: 1;
 
     .nav-item {
+      position: relative;
       display: flex;
       height: 100%;
       align-items: center;

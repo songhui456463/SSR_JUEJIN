@@ -24,16 +24,7 @@
 
 <script lang="ts" setup>
 import { PropType } from 'vue'
-/**
- * 顶部
- *
- * title： 顶部标签标题
- * link 链接
- */
-export interface HeaderBar {
-  title?: string
-  link?: string
-}
+import { HeaderBar } from '@/types/nav'
 const props = defineProps({
   headers: {
     type: Array as PropType<HeaderBar[]>,
