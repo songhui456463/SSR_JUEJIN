@@ -1,5 +1,6 @@
 <template>
   <div>这是{{ route.params }}</div>
+  <nuxt-page />
 </template>
 <script lang="ts" setup>
 const route = useRoute()

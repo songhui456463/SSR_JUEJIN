@@ -1,16 +1,16 @@
 <template>
   <nav class="view-nav">
     <div class="nav-list left">
-      <a
+      <NuxtLink
         v-for="(tag, tagindex) in tags"
         :key="tagindex"
-        :to="tag.link"
+        :href="tag.link"
         class="nav-item"
-        @mouseenter.stop="($event) => showCategoryPopover($event)"
-        @mouseleave.stop="($event) => hideCategoryPopover($event)"
+        @mouseenter.stop="($event) => showCategoryPopover($event, tagindex)"
+        @mouseleave.stop="($event) => hideCategoryPopover($event, tagindex)"
       >
         <div class="category-popover-box">
-          <div class="category-popover">
+          <div class="category-popover" v-if="showPopoverEle[tagindex]">
             <NuxtLink
               v-for="(tagitem, tagitemindex) in tag.tagitems"
               :key="tagitemindex"
@@ -21,7 +21,7 @@
           <!-- 第一个tagitem的title -->
           <span>{{ tag.tagitems[0].title }}</span>
         </div>
-      </a>
+      </NuxtLink>
     </div>
   </nav>
 </template>
@@ -64,11 +64,12 @@ const tags: Tag[] = [
         title: '前端'
       },
       {
-        title: '掘金日新计划'
-      },
-      {
         title: 'Java'
       },
+      {
+        title: '掘金日新计划'
+      },
+
       {
         title: 'Go'
       },
@@ -83,31 +84,35 @@ const tags: Tag[] = [
   }
 ]
 
-// 显示弹框
-const showCategoryPopover = (e: MouseEvent) => {
-  // 获取操作元素
-  const target: HTMLElement | null = e.target as HTMLElement
-  if (!target) return
-  const categoryPopover: HTMLElement = target.querySelector(
-    '.category-popover'
-  ) as HTMLElement
-  categoryPopover.style.display = 'block'
+// 每个大标签的弹出框对应一个响应式数据去显示和隐藏
+const showPopoverEle = ref(new Array(tags.length).fill(false))
+
+/**
+ * 显示弹框
+ * @param e
+ * @param tagindex 当前激活tag的索引
+ */
+const showCategoryPopover = (e: MouseEvent, tagindex: number) => {
+  showPopoverEle.value[tagindex] = true
+  // // 获取操作元素
+  // const target: HTMLElement | null = e.target as HTMLElement
+  // if (!target) return
+
+  // const categoryPopover: HTMLElement = target.querySelector(
+  //   '.category-popover'
+  // ) as HTMLElement
+  // console.log(categoryPopover)
+
+  // categoryPopover.style.display = 'block'
 }
 
 // 隐藏弹框
-const hideCategoryPopover = (e: MouseEvent) => {
-  // 获取操作元素
-  const target: HTMLElement | null = e.target as HTMLElement
-  if (!target) return
-  const categoryPopover: HTMLElement = target.querySelector(
-    '.category-popover'
-  ) as HTMLElement
-  categoryPopover.style.display = 'none'
+const hideCategoryPopover = (e: MouseEvent, tagindex: number) => {
+  showPopoverEle.value[tagindex] = false
 }
 </script>
 <style lang="scss" scoped>
 .category-popover {
-  display: none;
   position: absolute;
   left: 0;
   width: 250px;
