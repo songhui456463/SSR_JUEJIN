@@ -1,8 +1,8 @@
 <template>
   <div class="banner" v-show="isAdVisible">
-    <!--    <NuxtLink>
+    <NuxtLink>
       <img class="banner-image" src="/icons/advertisement.awebp" alt="" />
-    </NuxtLink> -->
+    </NuxtLink>
     <div class="close" @click="handlerShowAd"></div>
   </div>
 </template>

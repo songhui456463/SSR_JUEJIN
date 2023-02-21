@@ -1,5 +1,5 @@
 <template>
-  <div class="article-area">
+  <div class="main-container">
     <div class="view">
       <div class="article-area">
         <div class="article">
@@ -19,7 +19,7 @@
                 </nuxt-link>
               </div>
               <div class="meta-box">
-                <time> 2022年03月30日 09:48 </time>
+                <time class="time"> 2022年03月30日 09:48 </time>
                 <span class="views-count"> ·&nbsp;&nbsp;阅读 3421 </span>
               </div>
             </div>
@@ -27,8 +27,9 @@
           <div v-html="htmlValue" class="ck-content"></div>
         </div>
       </div>
-
-      <div class="sidebar">右边</div>
+      <div class="sidebar">
+        <ArticleNavigation />
+      </div>
       <div>点赞</div>
     </div>
   </div>
@@ -54,7 +55,35 @@ const { data, pending, error, refresh } = await useFetch(
 )
 </script>
 <style lang="less">
+.sidebar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 300px;
+  background-color: #fff;
+}
+
+.meta-box {
+  font-size: 14px;
+  color: #8a919f;
+  margin-top: 2px;
+  line-height: 22px;
+}
+
 .name {
+  display: inline-block;
+  vertical-align: top;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  color: #515767;
+}
+
+.time {
+  letter-spacing: 1px;
 }
 
 .avatar {
@@ -80,16 +109,23 @@ a {
   padding: 32px;
 }
 
-.article-area {
+.main-container {
   position: relative;
+  margin: 0 auto;
+  width: 1140px;
+}
+
+.article-area {
   width: 820px;
   max-width: 100%;
   box-sizing: border-box;
+  background-color: #fff;
 }
 
 .view {
+  position: relative;
   margin-top: 25px;
-  background-color: #fff;
+  background-color: rgba(0, 0, 0, 0);
 }
 
 /*
