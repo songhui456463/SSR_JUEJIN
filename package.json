@@ -1,4 +1,5 @@
 {
+  "name": "SSR_JUEJIN",
   "private": true,
   "scripts": {
     "build": "nuxt build",
