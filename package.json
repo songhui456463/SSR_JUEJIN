@@ -12,6 +12,7 @@
     "commit": "cz"
   },
   "devDependencies": {
+    "@types/showdown": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
     "commitizen": "^4.3.0",
@@ -31,5 +32,10 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "marked": "^4.2.12",
+    "showdown": "^2.1.0",
+    "strapi-plugin-ckeditor5": "^2.1.1-rc.1"
   }
 }

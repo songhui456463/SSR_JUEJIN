@@ -12,23 +12,10 @@
 </template>
 <script setup lang="ts">
 import { headers } from '@/mocks/top'
+import useTop from '@/hooks/useTop'
 const active_index = ref(0)
 
-// 导航栏收缩
-onMounted(() => {
-  window.addEventListener('scroll', (e) => {
-    const header: HTMLElement | null = document.querySelector('.header')
-    const navList: HTMLElement | null = document.querySelector('.view-nav')
-    if (!header || !navList) return
-    if (window.pageYOffset > 300) {
-      header.style.transform = 'translate3d(0,-100%,0)'
-      navList.style.top = '0px'
-    } else {
-      header.style.transform = 'none'
-      navList.style.top = '60px'
-    }
-  })
-})
+useTop()
 </script>
 
 <style lang="scss" scoped>
